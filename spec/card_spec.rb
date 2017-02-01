@@ -2,20 +2,32 @@ require 'card'
 
 describe 'Card' do
   describe '#initialize' do
-    it 'has a suit'
+    subject { Card.new(:'2', :clubs) }
 
-    it 'has a value'
+    it 'has a value' do
+      expect(subject.value).to eq(:'2')
+    end
+
+    it 'has a suit' do
+      expect(subject.suit).to eq(:clubs)
+    end
   end
 
-  describe '#match suit' do
+  describe '#match_value?' do
+    it 'recognizes when it matches another card\'s value'
+
+    it 'recognizes when it does not match another card\'s value'
+  end
+
+  describe '#match_suit?' do
     it 'recognizes when it matches another card\'s suit'
 
     it 'recognizes when it does not match another card\'s suit'
   end
 
-  describe '#match value' do
-    it 'recognizes when it matches another card\'s value'
+  describe '#one_above?' do
+    it 'recognizes when it is one above another card'
 
-    it 'recognizes when it does not match another card\'s value'
+    it 'recognizes when it is not one above another card'
   end
 end
