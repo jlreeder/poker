@@ -1,0 +1,2 @@
+#+TITLE: Poker
+A simple implementation of Poker to practice OO design and RSpec.
