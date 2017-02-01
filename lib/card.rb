@@ -5,4 +5,8 @@ class Card
     @value = value
     @suit = suit
   end
+
+  def show
+    "#{value}#{suit[0]}"
+  end
 end

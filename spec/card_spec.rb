@@ -13,6 +13,13 @@ describe 'Card' do
     end
   end
 
+  describe '#show' do
+    it 'returns a string of the value and suit combined' do
+      card = Card.new(:'2', :clubs)
+      expect(card.show).to eq('2c')
+    end
+  end
+
   describe '#match_value?' do
     it 'recognizes when it matches another card\'s value'
 
