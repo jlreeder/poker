@@ -12,7 +12,10 @@ class Deck
     @cards.shuffle!
   end
 
-  def deal; end
+  def deal(quantity)
+    raise 'Out of cards' if quantity > cards.length
+    cards.pop(quantity)
+  end
 
   def show_card(card)
     raise "Card not in deck: #{card}" unless cards.include?(card)
