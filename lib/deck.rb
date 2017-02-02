@@ -12,7 +12,7 @@ class Deck
     @cards.shuffle!
   end
 
-  def deal(quantity)
+  def deal(quantity = 5)
     raise 'Out of cards' if quantity > cards.length
     cards.pop(quantity)
   end
