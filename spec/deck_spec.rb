@@ -9,17 +9,17 @@ describe 'Deck' do
     end
 
     it 'has 52 cards' do
-      expect(subject.length).to be(52)
+      expect(subject.length).to eq(52)
     end
 
     it 'has cards that are all unique objects' do
-      expect(subject.uniq.length).to be(52)
+      expect(subject.uniq.length).to eq(52)
     end
 
     it 'has cards that all have unique value-suit pairs' do
       #NOTE: This is calling a method in Card. Should I refactor?
       val_suits = subject.map { |card| card.show }
-      expect(val_suits.uniq.length).to be(52)
+      expect(val_suits.uniq.length).to eq(52)
     end
   end
 
