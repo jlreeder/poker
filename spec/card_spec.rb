@@ -2,20 +2,20 @@ require 'card'
 
 describe 'Card' do
   describe '#initialize' do
-    subject { Card.new(:'2', :clubs) }
+    subject { Card.new(:'2', :c) }
 
     it 'has a value' do
       expect(subject.value).to eq(:'2')
     end
 
     it 'has a suit' do
-      expect(subject.suit).to eq(:clubs)
+      expect(subject.suit).to eq(:c)
     end
   end
 
   describe '#show' do
     it 'returns a string of the value and suit combined' do
-      card = Card.new(:'2', :clubs)
+      card = Card.new(:'2', :c)
       expect(card.show).to eq('2c')
     end
   end

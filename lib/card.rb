@@ -7,6 +7,6 @@ class Card
   end
 
   def show
-    "#{value}#{suit[0]}"
+    "#{value}#{suit}"
   end
 end
