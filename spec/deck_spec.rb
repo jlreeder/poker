@@ -42,6 +42,12 @@ describe 'Deck' do
         expect(dealt.length).to eq(5)
       end
 
+      it 'decreases the size of the deck by the requested number' do
+        initial_len = deck.cards.length
+        deck.deal(5)
+        expect(deck.cards.length).to eq(initial_len - 5)
+      end
+
       it 'returns card objects' do
         expect(dealt.first).to be_a(Card)
       end
