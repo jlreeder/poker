@@ -11,7 +11,10 @@ class Hand
                 :high_card
               ]
 
-  def initialize
+  attr_reader :cards
+
+  def initialize(cards)
+    @cards = cards
   end
 
   def top_combo
