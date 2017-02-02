@@ -36,13 +36,27 @@ describe 'Deck' do
 
   describe '#deal' do
     context 'when the request is fulfillable' do
-      it 'returns a certain number of cards'
+      subject(:dealt) { deck.deal(5) }
 
-      it 'removes those cards from its collection'
+      it 'returns the requested number of objects' do
+        expect(dealt.length).to eq(5)
+      end
+
+      it 'returns card objects' do
+        expect(dealt.first).to be_a(Card)
+      end
+
+      it 'removes those cards from its collection' do
+        dealt.each do |card|
+          expect(deck.show_card(card)).to raise(/not in deck/)
+        end
+      end
     end
 
     context 'when the request is not fulfillable' do
-      it 'returns an error if deck would run out'
+      it 'returns an error if deck would run out' do
+        expect { deck.deal(53) }.to rais(/out of cards/)
+      end
     end
   end
 end
