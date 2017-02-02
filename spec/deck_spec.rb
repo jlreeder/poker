@@ -48,14 +48,14 @@ describe 'Deck' do
 
       it 'removes those cards from its collection' do
         dealt.each do |card|
-          expect(deck.show_card(card)).to raise(/not in deck/)
+          expect { deck.show_card(card) }.to raise_error(/not in deck/)
         end
       end
     end
 
     context 'when the request is not fulfillable' do
       it 'returns an error if deck would run out' do
-        expect { deck.deal(53) }.to rais(/out of cards/)
+        expect { deck.deal(53) }.to raise_error(/Out of cards/)
       end
     end
   end
