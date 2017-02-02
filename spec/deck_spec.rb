@@ -1,8 +1,10 @@
+require 'byebug'
 require 'deck'
 
 describe 'Deck' do
+  let(:deck) { Deck.new }
+
   describe '#initialize' do
-    let(:deck) { Deck.new }
     subject { deck.cards }
 
     it 'has an array of cards' do
@@ -21,10 +23,15 @@ describe 'Deck' do
       val_suits = subject.map { |card| deck.show_card(card) }
       expect(val_suits.uniq.length).to eq(52)
     end
-  end
 
-  describe '#shuffle' do
-    it 'mixes up the card order'
+    it 'shuffles the cards' do
+      deck2 = Deck.new
+      cards2 = deck2.cards
+      val_suits1 = subject.map { |card| deck.show_card(card) }
+      val_suits2 = cards2.map { |card| deck2.show_card(card) }
+
+      expect(val_suits1).to_not eq(val_suits2)
+    end
   end
 
   describe '#deal' do

@@ -1,7 +1,7 @@
 require 'card'
 
 class Deck
-  attr_reader :cards
+  attr_accessor :cards
 
   SUITS = %i(d s c h)
   VALUES = %i(2 3 4 5 6 7 8 9 10 j q k a)
@@ -9,9 +9,8 @@ class Deck
   def initialize
     @cards = []
     populate
+    @cards.shuffle!
   end
-
-  def shuffle; end
 
   def deal; end
 
