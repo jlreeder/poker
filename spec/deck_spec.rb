@@ -2,7 +2,8 @@ require 'deck'
 
 describe 'Deck' do
   describe '#initialize' do
-    subject { Deck.new.cards }
+    let(:deck) { Deck.new }
+    subject { deck.cards }
 
     it 'has an array of cards' do
       expect(subject).to be_an(Array)
@@ -17,8 +18,7 @@ describe 'Deck' do
     end
 
     it 'has cards that all have unique value-suit pairs' do
-      #NOTE: This is calling a method in Card. Should I refactor?
-      val_suits = subject.map { |card| card.show }
+      val_suits = subject.map { |card| deck.show_card(card) }
       expect(val_suits.uniq.length).to eq(52)
     end
   end
