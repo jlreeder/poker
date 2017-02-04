@@ -1,40 +1,47 @@
+require 'rspec'
 require 'card'
 
-describe 'Card' do
+describe Card do
   describe '#initialize' do
-    subject { Card.new(:'2', :c) }
+    subject(:card) { Card.new(:spades, :ten) }
 
-    it 'has a value' do
-      expect(subject.value).to eq(:'2')
+    it 'sets up a card correctly' do
+      expect(card.suit).to eq(:spades)
+      expect(card.value).to eq(:ten)
     end
 
-    it 'has a suit' do
-      expect(subject.suit).to eq(:c)
+    it 'raises an error with an invalid suit' do
+      expect do
+        Card.new(:test, :ten)
+      end.to raise_error
+    end
+
+    it 'raises an error with an invalid value' do
+      expect do
+        Card.new(:spades, :test)
+      end.to raise_error
     end
   end
 
-  describe '#show' do
-    it 'returns a string of the value and suit combined' do
-      card = Card.new(:'2', :c)
-      expect(card.show).to eq('2c')
+  describe '#<=>' do
+    it 'should return 0 when cards are the same' do
+      expect(Card.new(:spades, :ten) <=> Card.new(:spades, :ten)).to eq(0)
     end
-  end
 
-  describe '#match_value?' do
-    it 'recognizes when it matches another card\'s value'
+    it 'should return 1 when card has higher value' do
+      expect(Card.new(:spades, :ace) <=> Card.new(:spades, :ten)).to eq(1)
+    end
 
-    it 'recognizes when it does not match another card\'s value'
-  end
+    it 'should return 1 when card has same value but higher suit' do
+      expect(Card.new(:spades, :ace) <=> Card.new(:hearts, :ace)).to eq(1)
+    end
 
-  describe '#match_suit?' do
-    it 'recognizes when it matches another card\'s suit'
+    it 'should return -1 when card has lower value' do
+      expect(Card.new(:spades, :ten) <=> Card.new(:spades, :ace)).to eq(-1)
+    end
 
-    it 'recognizes when it does not match another card\'s suit'
-  end
-
-  describe '#one_above?' do
-    it 'recognizes when it is one above another card'
-
-    it 'recognizes when it is not one above another card'
+    it 'should return -1 when card has same value but lower suit' do
+      expect(Card.new(:hearts, :ace) <=> Card.new(:spades, :ace)).to eq(-1)
+    end
   end
 end

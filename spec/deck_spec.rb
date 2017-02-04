@@ -1,68 +1,124 @@
-require 'byebug'
+require 'rspec'
 require 'deck'
 
-describe 'Deck' do
-  let(:deck) { Deck.new }
+describe Deck do
+  describe "::all_cards" do
+    subject(:all_cards) { Deck.all_cards }
 
-  describe '#initialize' do
-    subject { deck.cards }
-
-    it 'has an array of cards' do
-      expect(subject).to be_an(Array)
+    it "should generate 52 cards" do
+      expect(all_cards.count).to eq(52)
     end
 
-    it 'has 52 cards' do
-      expect(subject.length).to eq(52)
-    end
-
-    it 'has cards that are all unique objects' do
-      expect(subject.uniq.length).to eq(52)
-    end
-
-    it 'has cards that all have unique value-suit pairs' do
-      val_suits = subject.map { |card| deck.show_card(card) }
-      expect(val_suits.uniq.length).to eq(52)
-    end
-
-    it 'shuffles the cards' do
-      deck2 = Deck.new
-      cards2 = deck2.cards
-      val_suits1 = subject.map { |card| deck.show_card(card) }
-      val_suits2 = cards2.map { |card| deck2.show_card(card) }
-
-      expect(val_suits1).to_not eq(val_suits2)
+    it "returns all cards without duplicates" do
+      expect(
+        all_cards.map { |card| [card.suit, card.value] }.uniq.count
+      ).to eq(all_cards.count)
     end
   end
 
-  describe '#deal' do
-    context 'when the request is fulfillable' do
-      subject(:dealt) { deck.deal(5) }
+  let(:cards) do
+    [ double("card", :suit => :spades, :value => :king),
+      double("card", :suit => :spades, :value => :queen),
+      double("card", :suit => :spades, :value => :jack) ]
+  end
 
-      it 'returns the requested number of objects' do
-        expect(dealt.length).to eq(5)
-      end
-
-      it 'decreases the size of the deck by the requested number' do
-        initial_len = deck.cards.length
-        deck.deal(5)
-        expect(deck.cards.length).to eq(initial_len - 5)
-      end
-
-      it 'returns card objects' do
-        expect(dealt.first).to be_a(Card)
-      end
-
-      it 'removes those cards from its collection' do
-        dealt.each do |card|
-          expect { deck.show_card(card) }.to raise_error(/not in deck/)
-        end
-      end
+  describe "#initialize" do
+    it "by default fills itself with 52 cards" do
+      deck = Deck.new
+      expect(deck.count).to eq(52)
     end
 
-    context 'when the request is not fulfillable' do
-      it 'returns an error if deck would run out' do
-        expect { deck.deal(53) }.to raise_error(/Out of cards/)
+    it "can be initialized with an array of cards" do
+      deck = Deck.new(cards)
+      expect(deck.count).to eq(3)
+    end
+  end
+
+  let(:deck) do
+    Deck.new(cards.dup)
+  end
+
+  it "should not expose its cards" do
+    expect(deck).not_to respond_to(:cards)
+  end
+
+  describe "#take" do
+    # **use the front of the cards array as the top**
+    it "takes cards off the top of the deck" do
+      expect(deck.take(1)).to eq(cards[0..0])
+      expect(deck.take(2)).to eq(cards[1..2])
+    end
+
+    it "removes cards from deck on take" do
+      deck.take(2)
+      expect(deck.count).to eq(1)
+    end
+
+    it "doesn't allow you to take more cards than are in the deck" do
+      expect do
+        deck.take(4)
+      end.to raise_error("not enough cards")
+    end
+  end
+
+  describe "#return" do
+    let(:more_cards) do
+      [ double("card", :suit => :hearts, :value => :four),
+        double("card", :suit => :hearts, :value => :five),
+        double("card", :suit => :hearts, :value => :six) ]
+    end
+
+    it "should return cards to the deck" do
+      deck.return(more_cards)
+      expect(deck.count).to eq(6)
+    end
+
+    it "should not destroy the passed array" do
+      more_cards_dup = more_cards.dup
+      deck.return(more_cards_dup)
+      expect(more_cards_dup).to eq(more_cards)
+    end
+
+    it "should add new cards to the bottom of the deck" do
+      deck.return(more_cards)
+      deck.take(3) # toss 3 cards away
+
+      expect(deck.take(1)).to eq(more_cards[0..0])
+      expect(deck.take(1)).to eq(more_cards[1..1])
+      expect(deck.take(1)).to eq(more_cards[2..2])
+    end
+  end
+
+  describe '#shuffle' do
+    it 'should shuffle the cards' do
+      cards = deck.take(3)
+      deck.return(cards)
+
+      not_shuffled = (1..5).all? do
+        deck.shuffle
+        shuffled_cards = deck.take(3)
+        deck.return(shuffled_cards)
+
+        (0..2).all? { |i| shuffled_cards[i] == cards[i] }
       end
+
+      expect(not_shuffled).to be(false)
+    end
+  end
+
+  describe '#deal_hand' do
+    let(:deck) { Deck.new }
+
+    it 'should return a new hand' do
+      hand = deck.deal_hand
+      expect(hand).to be_a(Hand)
+      expect(hand.cards.count).to eq(5)
+    end
+
+    it 'should take cards from the deck' do
+      expect do
+        deck.deal_hand
+      end.to change{ deck.count }.by(-5)
     end
   end
 end
