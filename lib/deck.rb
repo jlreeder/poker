@@ -15,6 +15,10 @@ class Deck
     @cards.shift(num)
   end
 
+  def return(returned_cards)
+    @cards.concat(returned_cards)
+  end
+
   def self.all_cards
     deck = []
 
