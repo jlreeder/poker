@@ -69,9 +69,14 @@ class Hand
   end
 
   def straight?
+    return true if ace_low_straight?
     lowest = value_ranks.min
     sequence = (lowest..(lowest + 4)).to_a
     value_ranks == sequence
+  end
+
+  def ace_low_straight?
+    value_ranks == [2, 3, 4, 5, 14]
   end
 
   def royal?
