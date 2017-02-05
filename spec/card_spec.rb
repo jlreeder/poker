@@ -13,13 +13,13 @@ describe Card do
     it 'raises an error with an invalid suit' do
       expect do
         Card.new(:test, :ten)
-      end.to raise_error
+      end.to raise_error('invalid suit')
     end
 
     it 'raises an error with an invalid value' do
       expect do
         Card.new(:spades, :test)
-      end.to raise_error
+      end.to raise_error('invalid value')
     end
   end
 
