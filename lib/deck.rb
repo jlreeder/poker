@@ -11,12 +11,16 @@ class Deck
   end
 
   def take(num)
-    raise 'not enough cards' unless count - num > 0
+    raise 'not enough cards' unless count - num >= 0
     @cards.shift(num)
   end
 
   def return(returned_cards)
     @cards.concat(returned_cards)
+  end
+
+  def shuffle
+    
   end
 
   def self.all_cards
