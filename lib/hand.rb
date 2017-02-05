@@ -57,7 +57,31 @@ class Hand
   protected
 
   def tie_breaker(other)
-    @cards.max <=> other.cards.max
+    case rank
+    when :four_of_a_kind || :two_pair || :one_pair
+      match_tie_breaker(other)
+    else
+      @cards.max <=> other.cards.max
+    end
+  end
+
+  def match_tie_breaker(other)
+    case cards_matching_val.max <=> other.cards_matching_val.max
+    when -1
+      -1
+    when 0
+      cards_non_matching_val.max <=> other.cards_non_matching_val.max
+    when 1
+      1
+    end
+  end
+
+  def cards_matching_val
+    @cards.select { |card| value_ranks.count(card.value_rank) > 1 }
+  end
+
+  def cards_non_matching_val
+    @cards.reject { |card| value_ranks.count(card.value_rank) > 1 }
   end
 
   def suits
