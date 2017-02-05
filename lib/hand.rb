@@ -1,3 +1,4 @@
+require 'byebug'
 class Hand
   RANKS = [
     :royal_flush,
@@ -30,7 +31,8 @@ class Hand
   end
 
   def rank
-    :straight_flush if straight? && flush?
+    return :royal_flush if royal? && flush?
+    return :straight_flush if straight? && flush?
   end
 
   def <=>(other)
@@ -51,17 +53,21 @@ class Hand
   end
 
   def value_ranks
-    @cards.map(&:value_rank)
+    @cards.map(&:value_rank).sort
   end
 
   def flush?
-    suits.length == 1
+    suits.uniq.length == 1
   end
 
   def straight?
     lowest = value_ranks.min
-    sequence = (lowest..(lowest + 5))
+    sequence = (lowest..(lowest + 4)).to_a
     value_ranks == sequence
+  end
+
+  def royal?
+    value_ranks.all? { |v| v >= 10 }
   end
 
 end
