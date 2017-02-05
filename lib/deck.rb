@@ -1,17 +1,17 @@
 require 'card'
 
 class Deck
-  attr_reader :all_cards
+  attr_reader :cards
 
-  def initialize(cards = Deck.default_deck)
-    @all_cards = cards
+  def initialize(cards = Deck.all_cards)
+    @cards = cards
   end
 
   def count
-    @all_cards.count
+    @cards.count
   end
 
-  def self.default_deck
+  def self.all_cards
     deck = []
 
     Card::SUITS_SYMS.each do |suit|
