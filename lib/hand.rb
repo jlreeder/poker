@@ -62,11 +62,7 @@ class Hand
 
   def tie_breaker(other)
     case rank
-    when :four_of_a_kind
-      match_tie_breaker(other)
-    when :two_pair
-      match_tie_breaker(other)
-    when :one_pair
+    when :four_of_a_kind, :two_pair, :one_pair
       match_tie_breaker(other)
     else
       @cards.max <=> other.cards.max
