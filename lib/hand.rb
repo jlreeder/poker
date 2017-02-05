@@ -44,7 +44,7 @@ class Hand
   end
 
   def <=>(other)
-    case RANKS.index(rank) <=> RANKS.index(other.rank)
+    case RANKS.index(other.rank) <=> RANKS.index(rank)
     when -1
       -1
     when 0
