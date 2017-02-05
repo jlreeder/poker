@@ -54,6 +54,10 @@ class Hand
     end
   end
 
+  def self.winner(hands)
+    hands.max
+  end
+
   protected
 
   def tie_breaker(other)
