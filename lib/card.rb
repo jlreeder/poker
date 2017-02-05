@@ -19,17 +19,13 @@ class Card
   end
 
   def <=>(other)
-    suit_match = suit_rank <=> other.suit_rank
-
     case value_rank <=> other.value_rank
-    when 0
-      return 0 if suit_match.zero?
-      return 1 if suit_match == 1
-      return -1 if suit_match == -1
-    when 1
-      1
     when -1
       -1
+    when 0
+      suit_rank <=> other.suit_rank
+    when 1
+      1
     end
   end
 
