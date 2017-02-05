@@ -5,6 +5,7 @@ class Player
     @bankroll = bankroll
     @hand = nil
     @bet = 0
+    @folded = false
   end
 
   def deal_in(hand)
@@ -27,6 +28,18 @@ class Player
     cards = @hand.cards
     @hand = nil
     cards
+  end
+
+  def fold
+    @folded = true
+  end
+
+  def unfold
+    @folded = false
+  end
+
+  def folded?
+    @folded
   end
 
   def self.buy_in(bankroll)
