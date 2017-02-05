@@ -17,4 +17,11 @@ class Game
   def game_over?
     @players.select { |p| p.bankroll > 0 }.length == 1
   end
+
+  def deal_cards
+    @players.each do |player|
+      next if player.bankroll.zero?
+      player.deal_in(deck.deal_hand)
+    end
+  end
 end
