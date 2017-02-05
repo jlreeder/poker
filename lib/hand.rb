@@ -34,6 +34,7 @@ class Hand
     return :royal_flush if royal? && flush?
     return :straight_flush if straight? && flush?
     return :four_of_a_kind if four_of_a_kind?
+    return :full_house if full_house?
   end
 
   def <=>(other)
@@ -81,4 +82,7 @@ class Hand
     count_vals.values.sort == [1, 4]
   end
 
+  def full_house?
+    count_vals.values.sort == [2, 3]
+  end
 end
