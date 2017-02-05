@@ -33,6 +33,7 @@ class Hand
   def rank
     return :royal_flush if royal? && flush?
     return :straight_flush if straight? && flush?
+    return :four_of_a_kind if four_of_a_kind?
   end
 
   def <=>(other)
@@ -68,6 +69,16 @@ class Hand
 
   def royal?
     value_ranks.all? { |v| v >= 10 }
+  end
+
+  def count_vals
+    vals = Hash.new { |h, k| h[k] = 0 }
+    value_ranks.each { |rank| vals[rank] += 1 }
+    vals
+  end
+
+  def four_of_a_kind?
+    count_vals.values.sort == [1, 4]
   end
 
 end
