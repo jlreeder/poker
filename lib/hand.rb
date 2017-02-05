@@ -35,8 +35,12 @@ class Hand
 
   def <=>(other)
     case RANKS.index(rank) <=> RANKS.index(other.rank)
+    when -1
+      -1
     when 0
       @cards.max <=> other.cards.max
+    when 1
+      1
     end
   end
 
@@ -46,15 +50,18 @@ class Hand
     @cards.map(&:suit)
   end
 
+  def value_ranks
+    @cards.map(&:value_rank)
+  end
+
   def flush?
     suits.length == 1
   end
 
   def straight?
-    val_ranks = @cards.map { |c| c.value_rank }
-    lowest = val_ranks.min
+    lowest = value_ranks.min
     sequence = (lowest..(lowest + 5))
-    val_ranks == sequence
+    value_ranks == sequence
   end
 
 end
