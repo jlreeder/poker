@@ -20,7 +20,7 @@ class Deck
   end
 
   def shuffle
-    
+    @cards.shuffle!
   end
 
   def self.all_cards
