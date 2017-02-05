@@ -10,6 +10,11 @@ class Deck
     @cards.count
   end
 
+  def take(num)
+    raise 'not enough cards' unless count - num > 0
+    @cards.shift(num)
+  end
+
   def self.all_cards
     deck = []
 
