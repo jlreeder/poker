@@ -23,6 +23,10 @@ class Card
     suit_match = suit_rank <=> other.suit_rank
 
     return 0 if value_match.zero? && suit_match.zero?
+    return 1 if value_match == 1
+    return 1 if value_match.zero? && suit_match == 1
+    return -1 if value_match == -1
+    return -1 if value_match.zero? && suit_match == -1
   end
 
   protected
