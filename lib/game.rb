@@ -24,4 +24,8 @@ class Game
       player.deal_in(deck.deal_hand)
     end
   end
+
+  def add_to_pot(amount)
+    @pot += amount
+  end
 end
