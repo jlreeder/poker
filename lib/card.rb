@@ -29,8 +29,6 @@ class Card
     end
   end
 
-  protected
-
   def suit_rank
     SUITS[@suit]
   end
