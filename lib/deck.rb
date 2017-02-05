@@ -1,4 +1,5 @@
 require 'card'
+require 'hand'
 
 class Deck
 
@@ -21,6 +22,10 @@ class Deck
 
   def shuffle
     @cards.shuffle!
+  end
+
+  def deal_hand
+    Hand.new(take(5))
   end
 
   def self.all_cards
