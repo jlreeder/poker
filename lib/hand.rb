@@ -30,13 +30,31 @@ class Hand
   end
 
   def rank
-    :royal_flush
+    :straight_flush if straight? && flush?
+  end
+
+  def <=>(other)
+    case RANKS.index(rank) <=> RANKS.index(other.rank)
+    when 0
+      @cards.max <=> other.cards.max
+    end
   end
 
   protected
 
-  def <=>(other)
-    RANKS.index(rank) <=> RANKS.index(other.rank)
+  def suits
+    @cards.map(&:suit)
+  end
+
+  def flush?
+    suits.length == 1
+  end
+
+  def straight?
+    val_ranks = @cards.map { |c| c.value_rank }
+    lowest = val_ranks.min
+    sequence = (lowest..(lowest + 5))
+    val_ranks == sequence
   end
 
 end
