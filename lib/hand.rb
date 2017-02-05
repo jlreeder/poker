@@ -48,13 +48,17 @@ class Hand
     when -1
       -1
     when 0
-      @cards.max <=> other.cards.max
+      tie_breaker(other)
     when 1
       1
     end
   end
 
   protected
+
+  def tie_breaker(other)
+    @cards.max <=> other.cards.max
+  end
 
   def suits
     @cards.map(&:suit)
