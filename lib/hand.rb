@@ -35,6 +35,12 @@ class Hand
     return :straight_flush if straight? && flush?
     return :four_of_a_kind if four_of_a_kind?
     return :full_house if full_house?
+    return :flush if flush?
+    return :straight if straight?
+    return :three_of_a_kind if three_of_a_kind?
+    return :two_pair if two_pair?
+    return :one_pair if one_pair?
+    :high_card
   end
 
   def <=>(other)
@@ -84,5 +90,17 @@ class Hand
 
   def full_house?
     count_vals.values.sort == [2, 3]
+  end
+
+  def three_of_a_kind?
+    count_vals.values.sort == [1, 1, 3]
+  end
+
+  def two_pair?
+    count_vals.values.sort == [1, 2, 2]
+  end
+
+  def one_pair?
+    count_vals.values.sort == [1, 1, 1, 2]
   end
 end
