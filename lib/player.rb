@@ -3,7 +3,7 @@ class Player
 
   def initialize(bankroll)
     @bankroll = bankroll
-    @hand = []
+    @hand = nil
     @bet = 0
   end
 
@@ -17,6 +17,16 @@ class Player
     @bet += amount
     @bankroll -= change
     change
+  end
+
+  def receive_winnings(winnings)
+    @bankroll += winnings
+  end
+
+  def return_cards
+    cards = @hand.cards
+    @hand = nil
+    cards
   end
 
   def self.buy_in(bankroll)
