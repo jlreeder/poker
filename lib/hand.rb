@@ -31,16 +31,7 @@ class Hand
   end
 
   def rank
-    return :royal_flush if royal? && flush?
-    return :straight_flush if straight? && flush?
-    return :four_of_a_kind if four_of_a_kind?
-    return :full_house if full_house?
-    return :flush if flush?
-    return :straight if straight?
-    return :three_of_a_kind if three_of_a_kind?
-    return :two_pair if two_pair?
-    return :one_pair if one_pair?
-    :high_card
+    RANKS.each { |rank| return rank if send("#{rank}?") }
   end
 
   def <=>(other)
@@ -96,6 +87,14 @@ class Hand
     @cards.map(&:value_rank).sort
   end
 
+  def royal_flush?
+    royal? && flush?
+  end
+
+  def straight_flush?
+    straight? && flush?
+  end
+
   def flush?
     suits.uniq.length == 1
   end
@@ -139,5 +138,9 @@ class Hand
 
   def one_pair?
     count_vals.values.sort == [1, 1, 1, 2]
+  end
+
+  def high_card?
+    true
   end
 end
